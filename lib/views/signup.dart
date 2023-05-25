@@ -39,11 +39,11 @@ class _SignUpState extends State<SignUp> {
           setState(() {
             loading = false;
           });
-          utils().getmessage('Account registered');
+          Utils().getmessage('Account registered');
         },
       ).onError(
         (error, stackTrace) {
-          utils().getmessage(error.toString());
+          Utils().getmessage(error.toString());
           setState(() {
             loading = false;
           });

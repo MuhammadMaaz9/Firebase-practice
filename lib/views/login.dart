@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_practice/utils/utils.dart';
+import 'package:firebase_practice/views/posts.dart';
 import 'package:firebase_practice/views/signup.dart';
 import 'package:firebase_practice/widgets/round_button.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +17,38 @@ class _LoginState extends State<Login> {
   final _formkey = GlobalKey<FormState>();
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+  bool loading = false;
 
   @override
   void dispose() {
     super.dispose();
     emailcontroller.dispose();
     passwordcontroller.dispose();
+  }
+
+  void login() {
+    setState(() {
+      loading = true;
+    });
+    _auth
+        .signInWithEmailAndPassword(
+            email: emailcontroller.text, password: passwordcontroller.text)
+        .then(
+      (value) {
+        Utils().getmessage(value.user!.email.toString());
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const PostScreen()));
+        setState(() {
+          loading = false;
+        });
+      },
+    ).onError((error, stackTrace) {
+      Utils().getmessage(error.toString());
+      setState(() {
+        loading = false;
+      });
+    });
   }
 
   @override
@@ -83,9 +112,12 @@ class _LoginState extends State<Login> {
                 height: 50,
               ),
               RoundButton(
+                loading: loading,
                 title: 'Log In',
                 ontap: () {
-                  if (_formkey.currentState!.validate()) {}
+                  if (_formkey.currentState!.validate()) {
+                    login();
+                  }
                 },
               ),
               const SizedBox(
