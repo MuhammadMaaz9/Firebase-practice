@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_practice/utils/utils.dart';
+import 'package:firebase_practice/views/login_with_phone.dart';
 import 'package:firebase_practice/views/posts.dart';
 import 'package:firebase_practice/views/signup.dart';
 import 'package:firebase_practice/widgets/round_button.dart';
@@ -140,7 +141,27 @@ class _LoginState extends State<Login> {
                         fontWeight: FontWeight.bold,
                       ),
                     ))
-              ])
+              ]),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PhoneNumber()));
+                },
+                child: Container(
+                  height: 60,
+                  decoration: BoxDecoration(
+                      color: Colors.brown,
+                      borderRadius: BorderRadius.circular(30)),
+                  child: const Center(
+                    child: Text(
+                      'Login with Phone Number',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),
