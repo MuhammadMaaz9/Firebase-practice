@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_practice/utils/utils.dart';
+import 'package:firebase_practice/views/posts.dart';
 import 'package:firebase_practice/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class VerifyPhone extends StatefulWidget {
 }
 
 class _VerifyPhoneState extends State<VerifyPhone> {
-  final phonenumber = TextEditingController();
+  final verifycode = TextEditingController();
   final _auth = FirebaseAuth.instance;
   bool loading = false;
 
@@ -21,7 +22,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown,
-        title: const Text('Verify PhoneNumber'),
+        title: const Text('Verify'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -32,9 +33,9 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             ),
             TextFormField(
               keyboardType: TextInputType.phone,
-              controller: phonenumber,
+              controller: verifycode,
               decoration: const InputDecoration(
-                hintText: '+123 455 866524',
+                hintText: 'Enter 6 digit code',
                 contentPadding: EdgeInsets.only(left: 10),
               ),
             ),
@@ -43,43 +44,21 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             ),
             RoundButton(
               loading: loading,
-              title: 'Login',
-              ontap: () {
-                setState(() {
-                  loading = true;
-                });
-                _auth.verifyPhoneNumber(
-                  phoneNumber: phonenumber.text,
-                  verificationCompleted: (phoneAuthCredential) {
-                    setState(() {
-                      loading = false;
-                    });
-                  },
-                  verificationFailed: (error) {
-                    Utils().getmessage(error.toString());
-                    setState(() {
-                      loading = false;
-                    });
-                  },
-                  codeSent: (verificationId, forceResendingToken) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VerifyPhone(
-                                  Verificationid: verificationId,
-                                )));
-                    debugPrint('verifyy : ${verificationId.toString()}');
-                    setState(() {
-                      loading = false;
-                    });
-                  },
-                  codeAutoRetrievalTimeout: (verificationId) {
-                    Utils().getmessage(verificationId.toString());
-                    setState(() {
-                      loading = false;
-                    });
-                  },
+              title: 'Verify',
+              ontap: () async {
+                final credentials = PhoneAuthProvider.credential(
+                  verificationId: widget.Verificationid,
+                  smsCode: verifycode.text,
                 );
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PostScreen()));
+
+                try {
+                  await _auth.signInWithCredential(credentials);
+                } catch (e) {}
               },
             )
           ],

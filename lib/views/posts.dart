@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_practice/utils/utils.dart';
+import 'package:firebase_practice/views/add_post_screen.dart';
 import 'package:firebase_practice/views/login.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,14 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.brown,
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddPostScreen()));
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         actions: [
           IconButton(
