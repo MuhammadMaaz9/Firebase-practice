@@ -49,7 +49,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 });
                 databaseref
                     .child(DateTime.now().microsecondsSinceEpoch.toString())
-                    .child('Data')
                     .set({
                   'id': DateTime.now().microsecondsSinceEpoch.toString(),
                   'Name': postcontroller.text.toString(),

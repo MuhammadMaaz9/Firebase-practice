@@ -65,7 +65,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => VerifyPhone(
-                                  Verificationid: verificationId,
+                                  VerificationId: verificationId,
                                 )));
                     debugPrint('verifyy : ${verificationId.toString()}');
                     setState(() {

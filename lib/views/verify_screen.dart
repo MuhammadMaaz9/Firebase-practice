@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_practice/utils/utils.dart';
 import 'package:firebase_practice/views/posts.dart';
 import 'package:firebase_practice/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 
 class VerifyPhone extends StatefulWidget {
-  String Verificationid;
-  VerifyPhone({super.key, required this.Verificationid});
+  String VerificationId;
+  VerifyPhone({super.key, required this.VerificationId});
 
   @override
   State<VerifyPhone> createState() => _VerifyPhoneState();
@@ -47,7 +46,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               title: 'Verify',
               ontap: () async {
                 final credentials = PhoneAuthProvider.credential(
-                  verificationId: widget.Verificationid,
+                  verificationId: widget.VerificationId,
                   smsCode: verifycode.text,
                 );
 

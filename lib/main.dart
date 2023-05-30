@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_practice/views/posts.dart';
+import 'package:firebase_practice/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -15,7 +15,7 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PostScreen(),
+      home: SplashScreen(),
     );
   }
 }
