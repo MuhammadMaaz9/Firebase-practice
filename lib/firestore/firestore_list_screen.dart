@@ -16,6 +16,7 @@ class _FirestoreScreenState extends State<FirestoreScreen> {
   final _auth = FirebaseAuth.instance;
   final editcontroller = TextEditingController();
   final firestore = FirebaseFirestore.instance.collection('user').snapshots();
+  CollectionReference _ref = FirebaseFirestore.instance.collection('user');
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +62,27 @@ class _FirestoreScreenState extends State<FirestoreScreen> {
                 return CircularProgressIndicator();
 
               if (snapshot.hasError) {
-                return Text('some error');
+                return const Text('some error');
               }
               return Expanded(
                   child: ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   return ListTile(
+                    onTap: () {
+                      // _ref
+                      //     .doc(snapshot.data!.docs[index]['id'].toString())
+                      //     .update({'title': 'data is updated'}).then((value) {
+                      //   Utils().getmessage('post updated');
+                      // }).onError((error, stackTrace) {
+                      //   Utils().getmessage(error.toString());
+                      // });
+                      _ref
+                          .doc(snapshot.data!.docs[index]['id'].toString())
+                          .delete();
+                    },
                     title: Text(snapshot.data!.docs[index]['title'].toString()),
+                    subtitle: Text(snapshot.data!.docs[index]['id'].toString()),
                   );
                 },
               ));
